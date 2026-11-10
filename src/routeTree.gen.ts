@@ -10,33 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as IntervalosRouteImport } from './routes/intervalos'
+import { Route as SoundCheckRouteImport } from './routes/sound-check'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const IntervalosRoute = IntervalosRouteImport.update({
+  id: '/intervalos',
+  path: '/intervalos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SoundCheckRoute = SoundCheckRouteImport.update({
+  id: '/sound-check',
+  path: '/sound-check',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/intervalos': typeof IntervalosRoute
+  '/sound-check': typeof SoundCheckRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/intervalos': typeof IntervalosRoute
+  '/sound-check': typeof SoundCheckRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/intervalos': typeof IntervalosRoute
+  '/sound-check': typeof SoundCheckRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/intervalos' | '/sound-check'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/intervalos' | '/sound-check'
+  id: '__root__' | '/' | '/intervalos' | '/sound-check'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  IntervalosRoute: typeof IntervalosRoute
+  SoundCheckRoute: typeof SoundCheckRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +68,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/intervalos': {
+      id: '/intervalos'
+      path: '/intervalos'
+      fullPath: '/intervalos'
+      preLoaderRoute: typeof IntervalosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sound-check': {
+      id: '/sound-check'
+      path: '/sound-check'
+      fullPath: '/sound-check'
+      preLoaderRoute: typeof SoundCheckRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  IntervalosRoute: IntervalosRoute,
+  SoundCheckRoute: SoundCheckRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
