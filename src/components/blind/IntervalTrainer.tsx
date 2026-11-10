@@ -19,7 +19,7 @@ export function IntervalTrainer() {
   const listen = () => {
     let current = q;
     if (!current || picked) {
-      current = { base: randomBaseNote(), interval: INTERVALS[Math.floor(Math.random() * INTERVALS.length)] };
+      current = { base: randomBaseNote(), interval: INTERVALS[Math.floor(Math.random() * INTERVALS.length)]! };
       setQ(current);
       setPicked(null);
     }
