@@ -10,6 +10,8 @@ import {
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
+import { AppHeader } from "@/components/blind/AppHeader";
+import { PracticeProvider } from "@/hooks/use-practice";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
@@ -81,11 +83,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "The Blind Sound" },
+      { name: "description", content: "Treino de percepção musical" },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "The Blind Sound" },
+      { property: "og:description", content: "Treino de percepção musical" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
@@ -95,6 +97,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
   }),
@@ -106,11 +110,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="pt-BR" className="dark">
       <head>
         <HeadContent />
       </head>
-      <body>
+      <body className="font-sans antialiased">
         {children}
         <Scripts />
       </body>
@@ -124,7 +128,14 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <PracticeProvider>
+        <div className="min-h-screen bg-background">
+          <AppHeader />
+          <main className="mx-auto max-w-6xl px-4 py-10">
+            <Outlet />
+          </main>
+        </div>
+      </PracticeProvider>
     </QueryClientProvider>
   );
 }
